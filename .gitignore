@@ -1,0 +1,26 @@
+# Environment configuration
+.env
+
+# Uploads directory (keep structure, ignore files)
+uploads/*
+!uploads/.htaccess
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Backup files
+*.bak
+*.backup
+*~

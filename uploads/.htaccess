@@ -1,0 +1,14 @@
+# Security: Prevent PHP execution in uploads directory
+<FilesMatch "\.(php|php3|php4|php5|phtml)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Allow document downloads (PDF, Office files)
+<FilesMatch "\.(pdf|doc|docx|xls|xlsx|ppt|pptx)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Prevent directory listing
+Options -Indexes
