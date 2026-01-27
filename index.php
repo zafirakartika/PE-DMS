@@ -54,164 +54,122 @@ $folders = $pdo->query("
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/modern-style.css">
     <style>
-        .public-header-style {
-            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        /* --- HEADER STYLES (MATCHING ADMIN) --- */
+        .public-header {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); /* Daihatsu Blue */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .public-header-container {
-            max-width: 1400px;
+            max-width: 1400px; /* Matches Admin max-width */
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 1.25rem;
             display: flex;
             align-items: center;
-            min-height: 70px;
-            gap: 1.5rem;
+            height: 64px; /* Compact height */
+            gap: 2rem;
         }
 
+        /* Logo */
         .public-logo {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 1rem;
             text-decoration: none;
             flex-shrink: 0;
         }
 
         .public-logo-image {
+            height: 42px;
             width: auto;
-            height: 50px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            background: transparent; /* No box */
         }
 
         .public-logo-image img {
             height: 100%;
             width: auto;
-            max-width: 150px;
             object-fit: contain;
+            /* Subtle shadow to ensure logo pops on blue background */
+            filter: drop-shadow(0 1px 2px rgba(255,255,255,0.2));
         }
 
         .public-logo-text {
             display: flex;
             flex-direction: column;
-            gap: 0.1rem;
+            justify-content: center;
+            border-left: 1px solid rgba(255,255,255,0.3);
+            padding-left: 1rem;
+            height: 38px;
         }
 
         .public-logo-title {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             color: white;
-            letter-spacing: -0.01em;
             line-height: 1.2;
+            letter-spacing: -0.01em;
         }
 
         .public-logo-subtitle {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.9);
             font-weight: 400;
             letter-spacing: 0.02em;
-            line-height: 1.2;
         }
 
-        .public-header-actions {
+        /* Admin Button */
+        .header-actions {
             margin-left: auto;
-            display: flex;
-            gap: 0.75rem;
-            align-items: center;
         }
 
-        .admin-link {
+        .admin-btn {
             background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
             color: white;
             padding: 0.5rem 1rem;
             border-radius: 6px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            transition: all 0.25s;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .admin-link:hover {
-            background: white;
-            color: #0284c7;
-            transform: translateY(-1px);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
-        }
-
-        .search-box {
+            font-weight: 500;
+            font-size: 0.85rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            background: #f5f5f7;
-            border: 1px solid #e5e5e7;
-            border-radius: 12px;
-            padding: 0.5rem 1rem;
-            flex: 1;
-            max-width: 300px;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        .search-box input {
-            background: transparent;
-            border: none;
-            outline: none;
-            flex: 1;
-            color: #1d1d1f;
-            font-size: 0.95rem;
+        .admin-btn:hover {
+            background: white;
+            color: #0284c7;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .search-box input::placeholder {
-            color: #a1a1a6;
-        }
-
-        @media (max-width: 768px) {
-            .public-header-container {
-                flex-wrap: wrap;
-                min-height: auto;
-                padding: 0.75rem;
-            }
-
-            .public-nav {
-                flex-basis: 100%;
-                gap: 1rem;
-                order: 3;
-            }
-
-            .search-box {
-                max-width: 100%;
-            }
-        }
-    </style>
-
-    <style>
-        /* Document list and page styles */
+        /* --- PAGE CONTENT STYLES --- */
         .container {
-            max-width: 1400px;
+            max-width: 1400px; /* Matches Header */
             margin: 0 auto;
-            padding: 1rem;
+            padding: 1.5rem;
         }
 
+        /* Toolbar */
         .toolbar {
             background: #ffffff;
-            border: 1px solid #e5e5e7;
-            border-radius: 6px;
-            padding: 0.65rem;
-            margin-bottom: 0.75rem;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         }
 
         .toolbar-row {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.75rem;
             align-items: center;
             flex-wrap: wrap;
         }
@@ -219,363 +177,237 @@ $folders = $pdo->query("
         .search-input {
             flex: 1;
             min-width: 250px;
-            padding: 0.4rem 0.6rem 0.4rem 2rem;
-            border: 1px solid #e5e5e7;
-            border-radius: 5px;
-            font-size: 0.8rem;
+            padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.9rem;
             background: #ffffff;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: 0.6rem center;
+            background-position: 0.75rem center;
         }
 
         .search-input:focus {
             outline: none;
-            border-color: #0071e3;
-            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+            border-color: #0284c7;
+            box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.1);
         }
 
         select, .btn {
-            padding: 0.5rem 0.75rem;
-            border: 1px solid #e5e5e7;
+            padding: 0.5rem 1rem;
+            border: 1px solid #cbd5e1;
             border-radius: 6px;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             background: #ffffff;
             cursor: pointer;
             font-weight: 500;
+            color: #475569;
         }
 
         .btn-primary {
-            background: #0071e3;
+            background: #0284c7;
             color: white;
-            border-color: #0071e3;
+            border-color: #0284c7;
         }
 
         .btn-primary:hover {
-            background: #0055b3;
+            background: #0369a1;
         }
 
         .view-toggle {
             display: flex;
-            background: #f5f5f7;
+            background: #f1f5f9;
             border-radius: 6px;
             padding: 0.25rem;
             gap: 0.25rem;
         }
 
         .view-toggle a {
-            padding: 0.375rem 0.75rem;
+            padding: 0.4rem 0.8rem;
             border-radius: 4px;
             text-decoration: none;
-            color: #86868b;
+            color: #64748b;
             display: flex;
             align-items: center;
-            gap: 0.25rem;
-            font-size: 0.813rem;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            font-weight: 500;
         }
 
         .view-toggle a.active {
             background: #ffffff;
-            color: #0071e3;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            color: #0284c7;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
-        .results-info {
-            padding: 0.6rem 0.8rem;
-            background: #0071e3;
-            color: white;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Folder Section */
-        .folders-section {
-            margin-bottom: 0.9rem;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 0.6rem;
-        }
-
+        /* Sections */
         .section-header h2 {
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            color: #1d1d1f;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
+            color: #334155;
+            margin-bottom: 1rem;
         }
 
+        /* Folder Grid */
         .folders-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 0.6rem;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
 
         .folder-card {
             background: #ffffff;
-            border: 1px solid #e5e5e7;
-            border-radius: 8px;
-            padding: 0.7rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1rem;
             transition: all 0.2s;
             cursor: pointer;
             text-decoration: none;
-            display: block;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
 
         .folder-card:hover {
-            border-color: #0071e3;
-            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.15);
+            border-color: #0284c7;
             transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         .folder-card-icon {
-            width: 52px;
-            height: 52px;
-            background: linear-gradient(135deg, #0071e3 0%, #0071e3 100%);
-            border-radius: 8px;
+            width: 48px;
+            height: 48px;
+            background: #e0f2fe;
+            color: #0284c7;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
             font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
 
         .folder-card-name {
             font-weight: 600;
-            font-size: 0.8rem;
-            color: #1d1d1f;
-            margin-bottom: 0.2rem;
+            font-size: 0.9rem;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
         }
 
         .folder-card-count {
-            font-size: 0.7rem;
-            color: #86868b;
-            display: flex;
-            align-items: center;
-            gap: 0.2rem;
+            font-size: 0.75rem;
+            color: #64748b;
         }
 
         /* Table View */
         .table-view {
             background: #ffffff;
-            border: 1px solid #e5e5e7;
-            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
-        .table-view table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
+        .table-view table { width: 100%; border-collapse: collapse; }
         .table-view th {
-            background: #f5f5f7;
-            padding: 0.6rem 0.8rem;
+            background: #f8fafc;
+            padding: 0.75rem 1rem;
             text-align: left;
             font-weight: 600;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #86868b;
-            border-bottom: 1px solid #e5e5e7;
-        }
-
-        .table-view td {
-            padding: 0.7rem 0.8rem;
-            border-bottom: 1px solid #e5e5e7;
-            font-size: 0.8rem;
-        }
-
-        .table-view tr:last-child td {
-            border-bottom: none;
-        }
-
-        .table-view tr:hover {
-            background: #f5f5f7;
-        }
-
-        .doc-title {
-            font-weight: 600;
-            color: #1d1d1f;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .doc-title a {
-            color: #1d1d1f;
-            text-decoration: none;
-        }
-
-        .doc-title a:hover {
-            color: #0071e3;
-        }
-
-        .doc-icon {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, #0071e3 0%, #0071e3 100%);
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
             font-size: 0.75rem;
-            font-weight: 700;
-            flex-shrink: 0;
+            text-transform: uppercase;
+            color: #64748b;
+            border-bottom: 1px solid #e2e8f0;
         }
+        .table-view td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.9rem;
+            color: #334155;
+        }
+        .table-view tr:last-child td { border-bottom: none; }
+        .table-view tr:hover { background: #f8fafc; }
 
-        .doc-description {
-            color: #86868b;
-            font-size: 0.813rem;
-            margin-top: 0.25rem;
-            max-width: 400px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .tag-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.35rem;
-        }
+        .doc-title a { color: #1e293b; text-decoration: none; font-weight: 500; }
+        .doc-title a:hover { color: #0284c7; }
+        .doc-description { font-size: 0.8rem; color: #64748b; margin-top: 0.15rem; }
 
         .tag {
-            background: #f5f5f7;
-            color: #86868b;
+            background: #f1f5f9;
+            color: #64748b;
             padding: 0.15rem 0.5rem;
             border-radius: 4px;
             font-size: 0.75rem;
-            font-weight: 500;
+            border: 1px solid #e2e8f0;
         }
 
-        .actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
+        /* Action Buttons */
         .action-btn {
-            padding: 0.375rem 0.625rem;
-            border: 1px solid #e5e5e7;
-            border-radius: 4px;
-            background: #ffffff;
-            color: #86868b;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
             text-decoration: none;
-            font-size: 0.75rem;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 0.35rem;
+            gap: 0.4rem;
             font-weight: 500;
             transition: all 0.2s;
+            border: 1px solid #e2e8f0;
+            background: white;
+            color: #475569;
         }
-
-        .action-btn:hover {
-            background: #f5f5f7;
-            color: #0071e3;
-            border-color: #0071e3;
-        }
-
+        .action-btn:hover { border-color: #cbd5e1; background: #f8fafc; color: #1e293b; }
+        
         .action-btn.primary {
-            background: #0071e3;
+            background: #0284c7;
             color: white;
-            border-color: #0071e3;
+            border-color: #0284c7;
         }
-
-        .action-btn.primary:hover {
-            background: #0055b3;
-        }
+        .action-btn.primary:hover { background: #0369a1; }
 
         /* Grid View */
         .grid-view {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 0.75rem;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
         }
 
         .doc-card {
-            background: #ffffff;
-            border: 1px solid #e5e5e7;
-            border-radius: 8px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
             overflow: hidden;
             transition: all 0.2s;
         }
-
-        .doc-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border-color: #0071e3;
-        }
+        .doc-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border-color: #0284c7; }
 
         .doc-card-header {
-            background: linear-gradient(135deg, #0071e3 0%, #0071e3 100%);
-            color: white;
-            padding: 0.6rem;
-            font-weight: 700;
+            background: #f1f5f9;
+            color: #64748b;
+            padding: 0.5rem;
             text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .doc-card-body {
-            padding: 0.75rem;
-        }
-
-        .doc-card h3 {
-            font-size: 0.9rem;
-            margin-bottom: 0.4rem;
+            font-size: 0.75rem;
             font-weight: 600;
+            text-transform: uppercase;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        .doc-card h3 a {
-            color: #1d1d1f;
-            text-decoration: none;
-        }
-
-        .doc-card h3 a:hover {
-            color: #0071e3;
-        }
-
-        .doc-card-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-top: 0.6rem;
-            font-size: 0.7rem;
-            color: #86868b;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
+        .doc-card-body { padding: 1rem; }
+        .doc-card h3 { font-size: 0.95rem; margin-bottom: 0.5rem; line-height: 1.4; }
+        .doc-card h3 a { color: #1e293b; text-decoration: none; }
+        .doc-card h3 a:hover { color: #0284c7; }
+        
+        .doc-card-meta { display: flex; gap: 0.75rem; font-size: 0.75rem; color: #94a3b8; margin-top: 0.75rem; }
+        .meta-item i { color: #cbd5e1; }
 
         .doc-card-footer {
-            padding: 0.625rem 1rem;
-            background: #f5f5f7;
-            border-top: 1px solid #e5e5e7;
+            padding: 0.75rem 1rem;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
             display: flex;
             gap: 0.5rem;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: #ffffff;
-            border: 1px solid #e5e5e7;
-            border-radius: 8px;
-        }
-
-        .empty-state i {
-            font-size: 3rem;
-            color: #e5e5e7;
-            margin-bottom: 1rem;
         }
 
         /* Modal */
@@ -587,22 +419,21 @@ $folders = $pdo->query("
             top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
-        }
-
-        .modal.active {
-            display: flex;
+            background: rgba(15, 23, 42, 0.65); /* Matches Admin Modal backdrop */
+            backdrop-filter: blur(4px);
             align-items: center;
             justify-content: center;
         }
+        .modal.active { display: flex; }
 
         .modal-content {
-            background: #ffffff;
-            padding: 1.5rem;
+            background: white;
+            padding: 2rem;
             border-radius: 12px;
             width: 90%;
             max-width: 400px;
             position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
 
         .modal-close {
@@ -611,108 +442,30 @@ $folders = $pdo->query("
             right: 1rem;
             background: none;
             border: none;
-            font-size: 1.5rem;
-            color: #86868b;
-            cursor: pointer;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-close:hover {
-            background: #f5f5f7;
-        }
-
-        .modal h2 {
             font-size: 1.25rem;
-            margin-bottom: 1.5rem;
+            color: #94a3b8;
+            cursor: pointer;
         }
+        .modal-close:hover { color: #475569; }
 
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            font-size: 0.875rem;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.5rem 0.75rem;
-            border: 1px solid #e5e5e7;
-            border-radius: 6px;
-            font-size: 0.875rem;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #0071e3;
-            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
-        }
-
-        .alert {
-            padding: 0.75rem 1rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-            font-size: 0.875rem;
-        }
-
-        .alert-error {
-            background: #fef2f2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
-        }
-
-        .alert-success {
-            background: #f0fdf4;
-            color: #166534;
-            border: 1px solid #bbf7d0;
-        }
-
-        /* Tablet */
-        @media (max-width: 1024px) {
-            .container {
-                padding: 0.875rem;
-            }
-        }
-
-        /* Mobile */
-        @media (max-width: 768px) {
-            .container {
-                padding: 0.625rem;
-            }
-            .toolbar {
-                padding: 0.75rem;
-            }
-            .toolbar-row {
-                flex-direction: column;
-                gap: 0.625rem;
-            }
-            .search-group {
-                flex-direction: column;
-            }
-            .table-view {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            .grid-view {
-                grid-template-columns: 1fr;
-            }
-        }
+        .modal h2 { font-size: 1.25rem; margin-bottom: 1.5rem; color: #1e293b; font-weight: 700; }
+        
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; color: #475569; }
+        .form-group input { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; }
+        .form-group input:focus { border-color: #0284c7; outline: none; box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
+        
+        .alert { padding: 0.75rem; border-radius: 6px; margin-bottom: 1.25rem; font-size: 0.9rem; }
+        .alert-error { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
+        .alert-success { background: #dcfce7; color: #16a34a; border: 1px solid #bbf7d0; }
     </style>
 </head>
 <body>
-    <header class="public-header-style">
+    <header class="public-header">
         <div class="public-header-container">
             <a href="index.php" class="public-logo">
                 <div class="public-logo-image">
-                    <img src="assets/images/daihatsu-logo.png" alt="Document Management System" onerror="this.parentElement.innerHTML='<i class=\'fas fa-file-archive\' style=\'font-size:32px;color:#0071e3;\'></i>'">
+                    <img src="assets/images/daihatsu-logo.png" alt="Daihatsu" onerror="this.style.display='none'">
                 </div>
                 <div class="public-logo-text">
                     <div class="public-logo-title">Document Management System</div>
@@ -720,9 +473,9 @@ $folders = $pdo->query("
                 </div>
             </a>
             
-            <div class="public-header-actions">
-                <a href="#" onclick="openLoginModal(); return false;" class="admin-link">
-                    <i class="fas fa-user-shield"></i> Admin
+            <div class="header-actions">
+                <a href="#" onclick="openLoginModal(); return false;" class="admin-btn">
+                    <i class="fas fa-user-shield"></i> <span>Admin Login</span>
                 </a>
             </div>
         </div>
@@ -759,12 +512,9 @@ $folders = $pdo->query("
         </div>
 
         <?php if (!$searchQuery && !$folderId): ?>
-            <!-- Folder Navigation -->
             <div class="folders-section">
                 <div class="section-header">
-                    <h2>
-                        Browse by Folder
-                    </h2>
+                    <h2>Browse by Folder</h2>
                 </div>
                 <div class="folders-grid">
                     <?php foreach ($folders as $folder): ?>
@@ -774,7 +524,6 @@ $folders = $pdo->query("
                             </div>
                             <div class="folder-card-name"><?php echo clean($folder['name']); ?></div>
                             <div class="folder-card-count">
-                                <i class="fas fa-file-alt"></i>
                                 <?php echo $folder['document_count']; ?> document<?php echo $folder['document_count'] != 1 ? 's' : ''; ?>
                             </div>
                         </a>
@@ -783,16 +532,14 @@ $folders = $pdo->query("
             </div>
 
             <div class="section-header">
-                <h2>
-                    All Documents
-                </h2>
+                <h2>All Documents</h2>
             </div>
         <?php endif; ?>
 
         <?php if ($searchQuery || $folderId): ?>
-            <div class="results-info">
+            <div style="margin-bottom: 1rem; color: #64748b; font-size: 0.9rem;">
                 <i class="fas fa-info-circle"></i>
-                Found <?php echo count($documents); ?> document(s)
+                Found <strong><?php echo count($documents); ?></strong> document(s)
                 <?php if ($searchQuery): ?>matching "<?php echo clean($searchQuery); ?>"<?php endif; ?>
                 <?php if ($folderId):
                     $folderName = array_filter($folders, fn($f) => $f['id'] == $folderId);
@@ -802,9 +549,9 @@ $folders = $pdo->query("
         <?php endif; ?>
 
         <?php if (empty($documents)): ?>
-            <div class="empty-state">
-                <i class="fas fa-folder-open"></i>
-                <p><?php echo $searchQuery || $folderId ? 'No documents found' : 'No documents available'; ?></p>
+            <div style="text-align: center; padding: 4rem; color: #94a3b8; background: white; border-radius: 10px; border: 1px solid #e2e8f0;">
+                <i class="fas fa-folder-open" style="font-size: 3rem; margin-bottom: 1rem; color: #cbd5e1;"></i>
+                <p><?php echo $searchQuery || $folderId ? 'No documents found matching your criteria.' : 'No documents available yet.'; ?></p>
             </div>
         <?php elseif ($view === 'table'): ?>
             <div class="table-view">
@@ -824,21 +571,23 @@ $folders = $pdo->query("
                             <tr>
                                 <td>
                                     <div class="doc-title">
-                                        <div class="doc-icon">PDF</div>
-                                        <div>
-                                            <a href="view_document.php?id=<?php echo $doc['id']; ?>">
-                                                <?php echo clean($doc['title']); ?>
-                                            </a>
-                                            <?php if ($doc['description']): ?>
-                                                <div class="doc-description"><?php echo clean($doc['description']); ?></div>
-                                            <?php endif; ?>
+                                        <div style="display:flex; align-items:center; gap:0.5rem;">
+                                            <i class="far fa-file-pdf" style="color: #ef4444; font-size: 1.1rem;"></i>
+                                            <div>
+                                                <a href="view_document.php?id=<?php echo $doc['id']; ?>">
+                                                    <?php echo clean($doc['title']); ?>
+                                                </a>
+                                                <?php if ($doc['description']): ?>
+                                                    <div class="doc-description"><?php echo clean($doc['description']); ?></div>
+                                                <?php endif; ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
                                 <td><?php echo $doc['folder_name'] ? clean($doc['folder_name']) : '-'; ?></td>
                                 <td>
                                     <?php if ($doc['tags']): ?>
-                                        <div class="tag-list">
+                                        <div style="display:flex; gap:0.25rem; flex-wrap:wrap;">
                                             <?php foreach (array_slice(explode(',', $doc['tags']), 0, 2) as $tag): ?>
                                                 <span class="tag"><?php echo clean(trim($tag)); ?></span>
                                             <?php endforeach; ?>
@@ -848,12 +597,12 @@ $folders = $pdo->query("
                                 <td><?php echo date('M d, Y', strtotime($doc['uploaded_at'])); ?></td>
                                 <td><?php echo formatFileSize($doc['file_size']); ?></td>
                                 <td>
-                                    <div class="actions">
+                                    <div style="display:flex; gap:0.5rem;">
                                         <a href="view_document.php?id=<?php echo $doc['id']; ?>" class="action-btn">
-                                            <i class="fas fa-eye"></i> View
+                                            View
                                         </a>
                                         <a href="download.php?id=<?php echo $doc['id']; ?>" class="action-btn primary">
-                                            <i class="fas fa-download"></i> Download
+                                            <i class="fas fa-download"></i>
                                         </a>
                                     </div>
                                 </td>
@@ -866,33 +615,39 @@ $folders = $pdo->query("
             <div class="grid-view">
                 <?php foreach ($documents as $doc): ?>
                     <div class="doc-card">
-                        <div class="doc-card-header">PDF</div>
+                        <div class="doc-card-header">
+                            <i class="far fa-file-pdf"></i> PDF Document
+                        </div>
                         <div class="doc-card-body">
                             <h3><a href="view_document.php?id=<?php echo $doc['id']; ?>"><?php echo clean($doc['title']); ?></a></h3>
+                            
                             <?php if ($doc['description']): ?>
-                                <p class="doc-description"><?php echo clean(substr($doc['description'], 0, 80)).(strlen($doc['description']) > 80 ? '...' : ''); ?></p>
+                                <p style="font-size:0.85rem; color:#64748b; margin-bottom:0.75rem; line-height:1.5;">
+                                    <?php echo clean(substr($doc['description'], 0, 80)).(strlen($doc['description']) > 80 ? '...' : ''); ?>
+                                </p>
                             <?php endif; ?>
+
                             <?php if ($doc['tags']): ?>
-                                <div class="tag-list" style="margin-top: 0.75rem;">
+                                <div style="display:flex; gap:0.25rem; flex-wrap:wrap;">
                                     <?php foreach (array_slice(explode(',', $doc['tags']), 0, 3) as $tag): ?>
                                         <span class="tag"><?php echo clean(trim($tag)); ?></span>
                                     <?php endforeach; ?>
                                 </div>
                             <?php endif; ?>
+                            
                             <div class="doc-card-meta">
                                 <?php if ($doc['folder_name']): ?>
                                     <span class="meta-item"><i class="fas fa-folder"></i> <?php echo clean($doc['folder_name']); ?></span>
                                 <?php endif; ?>
-                                <span class="meta-item"><i class="fas fa-calendar"></i> <?php echo date('M d, Y', strtotime($doc['uploaded_at'])); ?></span>
                                 <span class="meta-item"><i class="fas fa-file"></i> <?php echo formatFileSize($doc['file_size']); ?></span>
                             </div>
                         </div>
                         <div class="doc-card-footer">
-                            <a href="view_document.php?id=<?php echo $doc['id']; ?>" class="action-btn" style="flex: 1;">
-                                <i class="fas fa-eye"></i> View
+                            <a href="view_document.php?id=<?php echo $doc['id']; ?>" class="action-btn" style="flex: 1; justify-content:center;">
+                                View
                             </a>
-                            <a href="download.php?id=<?php echo $doc['id']; ?>" class="action-btn primary" style="flex: 1;">
-                                <i class="fas fa-download"></i> Download
+                            <a href="download.php?id=<?php echo $doc['id']; ?>" class="action-btn primary" style="flex: 1; justify-content:center;">
+                                Download
                             </a>
                         </div>
                     </div>
@@ -904,24 +659,16 @@ $folders = $pdo->query("
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeLoginModal()">&times;</button>
-            <h2>Admin Login</h2>
+            <h2><i class="fas fa-user-shield" style="color:#0284c7; margin-right:0.5rem;"></i> Admin Login</h2>
             <?php if (isset($_GET['error'])): ?>
                 <div class="alert alert-error">
                     <?php
                     $errorMsg = 'An error occurred';
                     switch($_GET['error']) {
-                        case 'invalid':
-                            $errorMsg = 'Invalid username or password';
-                            break;
-                        case 'inactive':
-                            $errorMsg = 'Your account has been deactivated';
-                            break;
-                        case 'empty':
-                            $errorMsg = 'Please enter both username and password';
-                            break;
-                        case 'system':
-                            $errorMsg = 'System error. Please contact administrator';
-                            break;
+                        case 'invalid': $errorMsg = 'Invalid username or password'; break;
+                        case 'inactive': $errorMsg = 'Your account has been deactivated'; break;
+                        case 'empty': $errorMsg = 'Please enter both username and password'; break;
+                        case 'system': $errorMsg = 'System error. Please contact administrator'; break;
                     }
                     echo $errorMsg;
                     ?>
@@ -933,13 +680,13 @@ $folders = $pdo->query("
             <form action="auth/login.php" method="POST">
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" name="username" required autofocus>
+                    <input type="text" name="username" required autofocus placeholder="Enter your username">
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" required>
+                    <input type="password" name="password" required placeholder="Enter your password">
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">Login</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding:0.75rem; font-size:1rem; margin-top: 0.5rem;">Login to Dashboard</button>
             </form>
         </div>
     </div>
@@ -947,9 +694,11 @@ $folders = $pdo->query("
     <script>
         function openLoginModal() {
             document.getElementById('loginModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
         function closeLoginModal() {
             document.getElementById('loginModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
         window.onclick = function(event) {
             const modal = document.getElementById('loginModal');
@@ -962,7 +711,6 @@ $folders = $pdo->query("
         // Auto-focus search input if there's a search query
         if (searchInput.value) {
             searchInput.focus();
-            // Move cursor to end of text
             searchInput.setSelectionRange(searchInput.value.length, searchInput.value.length);
         }
 
@@ -971,27 +719,18 @@ $folders = $pdo->query("
             this.closest('form').submit();
         });
 
-        // Auto-search functionality with debounce and URL update (no page reload)
+        // Auto-search functionality with debounce
         let searchTimeout;
-        const folderSelect = document.querySelector('select[name="folder"]');
-
         searchInput.addEventListener('input', function() {
             clearTimeout(searchTimeout);
             const searchValue = this.value.trim();
-
             searchTimeout = setTimeout(function() {
-                // Update URL without page reload
                 const url = new URL(window.location);
-                if (searchValue) {
-                    url.searchParams.set('search', searchValue);
-                } else {
-                    url.searchParams.delete('search');
-                }
+                if (searchValue) url.searchParams.set('search', searchValue);
+                else url.searchParams.delete('search');
                 window.history.pushState({}, '', url);
-
-                // Reload page to show results
                 window.location.reload();
-            }, 800); // Increased to 800ms for smoother typing
+            }, 800);
         });
 
         searchInput.addEventListener('keypress', function(e) {
@@ -999,13 +738,9 @@ $folders = $pdo->query("
                 e.preventDefault();
                 clearTimeout(searchTimeout);
                 const searchValue = this.value.trim();
-
                 const url = new URL(window.location);
-                if (searchValue) {
-                    url.searchParams.set('search', searchValue);
-                } else {
-                    url.searchParams.delete('search');
-                }
+                if (searchValue) url.searchParams.set('search', searchValue);
+                else url.searchParams.delete('search');
                 window.location.href = url.toString();
             }
         });
