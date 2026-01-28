@@ -54,51 +54,60 @@ $folders = $pdo->query("SELECT * FROM folders ORDER BY name")->fetchAll();
     <link rel="stylesheet" href="../assets/css/modern-style.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: linear-gradient(135deg, #f0f4ff 0%, #f9fafb 100%); font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 1.25rem; }
-        .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; gap: 1rem; }
-        .page-header h1 { font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0; letter-spacing: -0.5px; }
+        body { background: #f9fafb; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 1rem; }
+        
+        /* Header Consistency */
+        .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+        .page-header h1 { font-size: 1.25rem; font-weight: 700; color: #111827; margin: 0; }
 
-        .filter-container { background: white; padding: 1rem; border-radius: 12px; margin-bottom: 1.25rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); border: 1px solid rgba(2, 132, 199, 0.1); }
-        .filter-form { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-        .filter-input { flex: 1; min-width: 250px; padding: 0.5rem 0.8rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.8rem; transition: all 0.3s; font-family: inherit; }
-        .filter-input:focus { outline: none; border-color: #0284c7; box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
-        .filter-select { padding: 0.5rem 0.8rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.8rem; transition: all 0.3s; background: white; cursor: pointer; font-family: inherit; }
-        .filter-select:focus { outline: none; border-color: #0284c7; box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
-        .btn { padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.8rem; font-weight: 600; border: none; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; transition: all 0.3s; letter-spacing: 0.3px; }
-        .btn-primary { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: white; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4); }
-        .btn-secondary { background: white; color: #374151; border: 2px solid #e5e7eb; }
-        .btn-secondary:hover { border-color: #0284c7; color: #0284c7; }
+        /* Search Bar Consistency */
+        .search-container { background: white; padding: 0.8rem; border-radius: 8px; margin-bottom: 0.75rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+        .search-form { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+        .search-input { flex: 1; min-width: 200px; padding: 0.4rem 0.6rem; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 0.8rem; }
+        .search-select { padding: 0.4rem 2rem 0.4rem 0.6rem; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 0.8rem; background: white; cursor: pointer; }
+        
+        /* Buttons */
+        .btn { padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500; border: none; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; transition: all 0.2s; }
+        .btn-primary { background: #0284c7; color: white; }
+        .btn-primary:hover { background: #0369a1; }
+        .btn-secondary { background: #f3f4f6; color: #374151; border: 1px solid #e5e7eb; }
+        .btn-secondary:hover { background: #e5e7eb; }
 
-        .alert { padding: 0.8rem 1rem; border-radius: 10px; margin-bottom: 1rem; font-size: 0.8rem; display: flex; align-items: center; gap: 0.6rem; font-weight: 500; }
-        .alert-success { background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); color: #065f46; border-left: 4px solid #10b981; }
-        .alert-error { background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); color: #991b1b; border-left: 4px solid #ef4444; }
+        /* Alerts */
+        .alert { padding: 0.6rem 0.8rem; border-radius: 6px; margin-bottom: 0.75rem; font-size: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
+        .alert-success { background: #d1fae5; color: #065f46; }
+        .alert-error { background: #fee2e2; color: #991b1b; }
 
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
-        .project-card { background: white; border-radius: 12px; padding: 1.1rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); transition: all 0.3s; border: 1px solid #f0f0f0; position: relative; overflow: hidden; }
-        .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #0284c7, #06b6d4); }
-        .project-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); }
+        /* Grid & Cards */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; }
+        .project-card { background: white; border-radius: 8px; padding: 0.9rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); transition: all 0.2s; display: flex; flex-direction: column; border: 1px solid transparent; }
+        .project-card:hover { box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transform: translateY(-2px); border-color: #e5e7eb; }
 
-        .project-header { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.8rem; }
-        .project-icon { width: 44px; height: 44px; background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; flex-shrink: 0; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
-        .project-title { flex: 1; }
-        .project-title h3 { font-size: 1.05rem; font-weight: 700; color: #111827; margin: 0 0 0.25rem 0; letter-spacing: -0.3px; }
-        .project-meta { font-size: 0.75rem; color: #9ca3af; font-weight: 500; }
+        .project-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.6rem; }
+        .project-icon { width: 42px; height: 42px; background: #e0f2fe; color: #0284c7; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0; }
+        
+        .project-title { flex: 1; min-width: 0; }
+        .project-title h3 { font-size: 0.95rem; font-weight: 600; color: #111827; margin: 0 0 0.1rem 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .project-subtitle { font-size: 0.75rem; color: #6b7280; display: flex; align-items: center; gap: 0.3rem; }
 
-        .project-description { font-size: 0.8rem; color: #6b7280; margin-bottom: 0.75rem; line-height: 1.5; }
+        .project-description { font-size: 0.8rem; color: #4b5563; margin-bottom: 0.75rem; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.25em; }
 
-        .project-stats { display: flex; gap: 1.2rem; padding: 0.75rem 0; border-top: 1px solid #f3f4f6; border-bottom: 1px solid #f3f4f6; margin-bottom: 0.75rem; }
-        .stat { font-size: 0.75rem; color: #6b7280; font-weight: 500; }
+        .project-stats { display: flex; align-items: center; justify-content: space-between; padding-top: 0.6rem; border-top: 1px solid #f3f4f6; margin-bottom: 0.6rem; font-size: 0.75rem; color: #6b7280; }
+        .stat-item { display: flex; align-items: center; gap: 0.3rem; }
 
-        .project-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-        .btn-action { padding: 0.5rem 0.7rem; border-radius: 8px; font-size: 0.75rem; font-weight: 600; text-decoration: none; text-align: center; border: 1.5px solid #e5e7eb; background: white; color: #374151; transition: all 0.3s; cursor: pointer; letter-spacing: 0.2px; }
-        .btn-action:hover { background: #f0f9ff; border-color: #0284c7; color: #0284c7; transform: translateY(-1px); }
-        .btn-action.btn-danger { color: #dc2626; border-color: #fecaca; }
+        /* Actions */
+        .project-actions { display: flex; gap: 0.4rem; }
+        .btn-action { flex: 1; padding: 0.35rem 0.5rem; border-radius: 5px; font-size: 0.75rem; font-weight: 500; text-decoration: none; text-align: center; border: 1px solid #e5e7eb; background: white; color: #374151; transition: all 0.2s; display: inline-flex; justify-content: center; align-items: center; gap: 0.3rem; }
+        .btn-action:hover { background: #f9fafb; border-color: #0284c7; color: #0284c7; }
+        .btn-action.btn-primary-light { background: #f0f9ff; color: #0284c7; border-color: #bae6fd; }
+        .btn-action.btn-primary-light:hover { background: #e0f2fe; }
+        .btn-action.btn-danger { color: #dc2626; }
         .btn-action.btn-danger:hover { background: #fee2e2; border-color: #dc2626; }
+        .btn-action.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; background: #f3f4f6; }
 
-        .empty-state { background: white; border-radius: 12px; padding: 2.5rem 1.5rem; text-align: center; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); border: 1px solid #f0f0f0; }
-        .empty-state p { color: #6b7280; margin-bottom: 1rem; font-size: 0.9rem; font-weight: 500; }
+        .empty-state { background: white; border-radius: 8px; padding: 2rem 1.5rem; text-align: center; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+        .empty-state p { color: #6b7280; margin-bottom: 1rem; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -106,19 +115,17 @@ $folders = $pdo->query("SELECT * FROM folders ORDER BY name")->fetchAll();
 
     <div class="container">
         <div class="page-header">
-            <div>
-                <h1>Projects</h1>
-            </div>
+            <h1>Manage Projects</h1>
             <a href="add_project.php" class="btn btn-primary">
-                New Project
+                <i class="fas fa-plus"></i> Add Project
             </a>
         </div>
 
-        <div class="filter-container">
-            <form action="" method="GET" class="filter-form">
+        <div class="search-container">
+            <form action="" method="GET" class="search-form">
                 <input type="text" name="search" placeholder="Search projects by name..." 
-                       value="<?php echo clean($searchQuery); ?>" class="filter-input">
-                <select name="folder" class="filter-select">
+                       value="<?php echo clean($searchQuery); ?>" class="search-input">
+                <select name="folder" class="search-select">
                     <option value="">All Folders</option>
                     <?php foreach ($folders as $folder): ?>
                         <option value="<?php echo $folder['id']; ?>" <?php echo ($folderId == $folder['id']) ? 'selected' : ''; ?>>
@@ -127,11 +134,11 @@ $folders = $pdo->query("SELECT * FROM folders ORDER BY name")->fetchAll();
                     <?php endforeach; ?>
                 </select>
                 <button type="submit" class="btn btn-primary">
-                    Search
+                    <i class="fas fa-search"></i> Search
                 </button>
                 <?php if ($searchQuery || $folderId): ?>
                     <a href="projects.php" class="btn btn-secondary">
-                        Clear
+                        <i class="fas fa-times"></i> Clear
                     </a>
                 <?php endif; ?>
             </form>
@@ -139,6 +146,7 @@ $folders = $pdo->query("SELECT * FROM folders ORDER BY name")->fetchAll();
 
         <?php if (isset($_GET['success'])): ?>
             <div class="alert alert-success">
+                <i class="fas fa-check-circle"></i>
                 <?php
                 if ($_GET['success'] === 'created') echo 'Project created successfully';
                 elseif ($_GET['success'] === 'updated') echo 'Project updated successfully';
@@ -149,6 +157,7 @@ $folders = $pdo->query("SELECT * FROM folders ORDER BY name")->fetchAll();
 
         <?php if (isset($_GET['error'])): ?>
             <div class="alert alert-error">
+                <i class="fas fa-exclamation-circle"></i>
                 <?php
                 if ($_GET['error'] === 'has_documents') echo 'Cannot delete project that contains documents';
                 elseif ($_GET['error'] === 'delete_failed') echo 'Failed to delete project';
@@ -158,9 +167,10 @@ $folders = $pdo->query("SELECT * FROM folders ORDER BY name")->fetchAll();
 
         <?php if (empty($projects)): ?>
             <div class="empty-state">
+                <i class="fas fa-briefcase" style="font-size: 2.5rem; color: #d1d5db; margin-bottom: 0.75rem;"></i>
                 <p>No projects found</p>
                 <a href="add_project.php" class="btn btn-primary">
-                    Create Your First Project
+                    <i class="fas fa-plus"></i> Create Your First Project
                 </a>
             </div>
         <?php else: ?>
@@ -173,46 +183,44 @@ $folders = $pdo->query("SELECT * FROM folders ORDER BY name")->fetchAll();
                             </div>
                             <div class="project-title">
                                 <h3><?php echo clean($project['name']); ?></h3>
-                                <div class="project-meta">
-                                    <?php echo clean($project['folder_name'] ?? 'No Folder'); ?>
+                                <div class="project-subtitle">
+                                    <i class="fas fa-folder"></i> <?php echo clean($project['folder_name'] ?? 'No Folder'); ?>
                                 </div>
                             </div>
                         </div>
 
-                        <?php if ($project['description']): ?>
-                            <div class="project-description">
-                                <?php echo clean($project['description']); ?>
-                            </div>
-                        <?php endif; ?>
+                        <div class="project-description">
+                            <?php echo $project['description'] ? clean($project['description']) : '<span style="color:#9ca3af; font-style:italic;">No description provided</span>'; ?>
+                        </div>
 
                         <div class="project-stats">
-                            <div class="stat">
-                                <?php echo $project['document_count']; ?> document<?php echo $project['document_count'] != 1 ? 's' : ''; ?>
+                            <div class="stat-item">
+                                <i class="fas fa-file-alt"></i> <?php echo $project['document_count']; ?> Docs
                             </div>
-                            <div class="stat">
-                                By <?php echo clean($project['creator_name'] ?? 'N/A'); ?>
+                            <div class="stat-item">
+                                <i class="fas fa-user"></i> <?php echo clean($project['creator_name'] ?? 'N/A'); ?>
                             </div>
                         </div>
 
                         <div class="project-actions">
-                            <a href="upload_document.php?project_id=<?php echo $project['id']; ?>" class="btn-action" style="background: #f0f9ff; border-color: #0284c7; color: #0284c7; font-weight: 600;" title="Add document to this project">
-                                Add
+                            <a href="upload_document.php?project_id=<?php echo $project['id']; ?>" class="btn-action btn-primary-light" title="Add Document">
+                                <i class="fas fa-plus"></i> Add
                             </a>
                             <a href="view_project.php?id=<?php echo $project['id']; ?>" class="btn-action">
-                                View
+                                <i class="fas fa-eye"></i> View
                             </a>
                             <a href="edit_project.php?id=<?php echo $project['id']; ?>" class="btn-action">
-                                Edit
+                                <i class="fas fa-edit"></i> Edit
                             </a>
                             <?php if ($project['document_count'] == 0): ?>
                                 <a href="delete_project.php?id=<?php echo $project['id']; ?>"
                                    class="btn-action btn-danger"
-                                   onclick="return confirm('Delete this project?')">
-                                    Delete
+                                   onclick="return confirm('Delete this project?')" title="Delete">
+                                    <i class="fas fa-trash"></i>
                                 </a>
                             <?php else: ?>
-                                <span class="btn-action" title="Has documents" style="opacity: 0.5; cursor: not-allowed;">
-                                    Locked
+                                <span class="btn-action disabled" title="Locked">
+                                    <i class="fas fa-lock"></i>
                                 </span>
                             <?php endif; ?>
                         </div>
